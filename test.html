@@ -1,28 +1,136 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Home</title>
-    </head>
+<head>
+    <title> Cookie clicker!</title>
+</head>
+<body>
+    <script>
+        var clicked = 0;
+        var Iclicked = 1;
 
+        // var voor alle baking dingen
+        var baking = 0.2;
+        var bakingcounter = 1;
+        var bakeKosten = 10;
+        var bakeDuuder = 5;
 
-        <h1>Welcome!</h1>
-        <p>For this small exsersie we need your information. Please add your information in the two area's below.</p>
+        // var voor alle oven dingen
+        var ovening = 0.5;
+        var OvenCounter = 1;
+        var ovenKosten = 1000;
+        var ovenDuurder = 500;
+
+        function clickForCookies(){
+            document.getElementById("aantalCookies").innerHTML = clicked += Iclicked;   
+            document.getElementById("aantalCookies").innerHTML = "Hoeveelheid Cookies: " + clicked.toFixed(2);        
+        }
+
+        function bake(){
+            if(clicked >= bakeKosten){
+                document.getElementById("aantalCookies").innerHTML = clicked -= bakeKosten;
+                document.getElementById("aantalCookies").innerHTML = "Hoeveelheid Cookies: " + clicked.toFixed(2); 
+                document.getElementById("aantalCookiesPerSec").innerHTML = "Aantal Cookies per seconde: " + (baking * bakingcounter).toFixed(2);
+                document.getElementById("button2").innerHTML = "bake:" + bakingcounter;
+                document.getElementById("kostenBake").innerHTML = "kosten: " + (bakeKosten += bakeDuuder);
+                bakingcounter++;
+                startBaking();
+            }   
+        }
+
+        function Oven(){
+            if(clicked >= 1000){
+                document.getElementById("aantalCookies").innerHTML = clicked -= ovenKosten;
+                document.getElementById("aantalCookies").innerHTML = "Hoeveelheid Cookies: " + clicked.toFixed(2); 
+                document.getElementById("aantalCookiesPerSec").innerHTML = "Aantal Cookies per seconde: " + (ovening * OvenCounter).toFixed(2);
+                document.getElementById("button3").innerHTML = "Oven:" + bakingcounter;
+                document.getElementById("kostenOven").innerHTML = "Kosten :" + (ovenKosten += ovenDuurder);
+                OvenCounter++;
+                startOvening();
+            }   
+        }
+
+        function startBaking(){
+                window.setInterval(function(){
+                    clicked += baking;
+                    document.getElementById("aantalCookies").innerHTML = "Hoeveelheid Cookies: " + clicked.toFixed(2);
+                }, 1000);
+        }
+
+        function startOvening(){
+                window.setInterval(function(){
+                    clicked += ovening;
+                    document.getElementById("aantalCookies").innerHTML = "Hoeveelheid Cookies: " + clicked.toFixed(2);
+                }, 1000);
+        }
         
-        
-    <script> 
-        
+
 
     </script>
-    <body>
-        <form >
-            <label for="fname">First name:</label>
-            <input type="text" id="fname" value="vull in"  ><br><br>
-            <label for="lname">Last name:</label>
-            <input type="text" id="lname" value="vull in" ><br><br>
-            <input type="submit" value="Submit">            
-          </form>
 
-        
 
+    <h1>Welcome to cookie clicker.io</h1><br><br>
+    <h2 id="aantalCookiesPerSec" value=" text">Aantal Cookies per seconde: </h2><br>
+    <h2 id="aantalCookies" > Hoeveelheid Cookies: 0</h2>
+    <button type="button" id="button1" value="text" onclick= "clickForCookies();">Click me!</button><br><br>    
+    <p id="kostenBake">Kosten: 10</p>
+    <button type="button" id="button2" value="text" onclick= "bake();" disabled>Bake</button><br>
+    <p id="kostenOven">kosten: 1000</p> 
+    <button type="button" id="button3" value="text" onclick= "Oven();" disabled>Oven</button><br><br><br>
+
+    <style>
+#button1 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+#button1:hover {
+  background-color: #0062cc;
+  transform: scale(1.1);
+}
+
+.button-clicked {
+  animation: button-click-animation 0.3s ease-in-out;
+}
+
+@keyframes button-click-animation {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+    </style>
+
+
+    
+    <script>
+        // Voeg event listener toe aan "aantalCookies"
+        document.getElementById("aantalCookies").addEventListener("DOMSubtreeModified", function(){
+            if(clicked >= 10){
+                document.getElementById("button2").removeAttribute("disabled");
+            }
+        });
+        // Voeg event listener toe aan "aantalCookies"
+        document.getElementById("aantalCookies").addEventListener("DOMSubtreeModified", function(){
+            if(clicked >= 1000){
+                document.getElementById("button3").removeAttribute("disabled");
+            }
+        });
+
+        const button = document.getElementById("button1");
+        button.addEventListener("click", function() {
+            button.classList.add("button-clicked");
+            setTimeout(function() {
+                button.classList.remove("button-clicked");
+            }, 300);
+        });
+
+    </script>
 </body>
 </html>
